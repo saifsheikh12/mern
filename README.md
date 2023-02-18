@@ -1,70 +1,97 @@
-# Getting Started with Create React App
+const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const mongoose = require('mongoose');
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+const app = express();
 
-## Available Scripts
+app.use(bodyParser.json());
+app.use(cors());
 
-In the project directory, you can run:
+mongoose.connect('mongodb://localhost:27017/?directConnection=true', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-### `npm start`
+const postSchema = new mongoose.Schema({
+  post: String,
+  comment: String,
+});
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+const Posts = mongoose.model('PostCom', postSchema);
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+app.get('/comPost', async (req, res) => {
+  const posts = await Posts.find({});
+  res.json(posts);
+});
 
-### `npm test`
+app.post('/comPost', async (req, res) => {
+  const { post, comment } = req.body;
+  const posts = new Posts({ post, comment });
+  await posts.save();
+  res.json(posts);
+});
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+app.put('/comPost/:id', async (req, res) => {
+  const { id } = req.params;
+  const { post, comment } = req.body;
+  await Posts.findByIdAndUpdate(id, { post, comment });
+  const updatedName = await Posts.findById(id);
+  res.json(updatedName);
+});
 
-### `npm run build`
+app.delete('/comPost/:id', async (req, res) => {
+  const { id } = req.params;
+  await Posts.findByIdAndDelete(id);
+  res.json({ message: 'Post deleted' });
+});
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+const port = process.env.PORT || 4000;
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+-------------------------------------------------------------------
+import React, { useState } from 'react';
+import axios from 'axios';
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+const PostForm = ({ onSuccess }) => {
+  const [post, setPost] = useState('');
+  const [comment, setComment] = useState('');
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const response = await axios.post('http://localhost:4000/comPost', {
+      post,
+      comment,
+    });
+    setPost('');
+    setComment('');
+    onSuccess(response.data);
+  };
 
-### `npm run eject`
+  return (
+    <form onSubmit={handleSubmit}>
+      <label>
+        POST:
+        <input
+          type="text"
+          value={post}
+          onChange={(e) => setPost(e.target.value)}
+        />
+      </label>
+      <label>
+        Comment:
+        <input
+          type="text"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+        />
+      </label>
+      <button type="submit">Submit Post</button>
+    </form>
+  );
+};
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+export default PostForm;
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+  newwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww
