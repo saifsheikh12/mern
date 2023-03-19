@@ -1,12 +1,13 @@
 
 import './App.css';
-import PostFrom from './PostFrom';
+
+import RegisterFile from './RegisterFile';
+
 
 function App() {
   return (
-    <div className="App">
-
-      <PostFrom/>
+    <div>
+<RegisterFile/>
      
     </div>
   );

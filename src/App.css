@@ -1,38 +1,94 @@
-.App {
-  text-align: center;
+*{
+
+ background-color: skyblue; 
+ 
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.table{
+  background-color: cornsilk;
+  align-items: center;
+
+ 
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.name{
+
+  color:red;
+  align-items: center;
+  align-self: center;
+  symbols: -moz-element();
+  font-family: cursive;
+  margin-left: 560px;
+  margin-right: 690px;
+  font-size: 30px;
+  background-color: lightblue;
+  border-radius: 10px;
+  margin-top: 80px;
+  
+
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.box{
+  background-color: darkkhaki;
+  height: 300px;
+  width: 550px;
+  align-items: center;
+  align-items: center;
+  align-content: center;
+  margin-left: 380px;
+  padding-top: 0.5px;
+  padding-bottom: 40px;
+  border-radius: 40%;
+
+  background-image: url('../img/images.jpeg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+
+  
+ 
+}
+
+
+
+form {
   display: flex;
   flex-direction: column;
+  width: 350px;
+margin: auto;
+  border: 1px solid gray;
+  padding: 20px;
+  margin-top:50px;
+  background-color: dodgerblue;
+  height: 200px;
+}
+
+label {
+  font-weight: bold;
+  color: black;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+input {
+  padding: 10px;
+  margin: 5px 0;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: aliceblue;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  align-self: center;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
   color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+button[type="submit"]:hover {
+  background-color: #3e8e41;
 }
